@@ -1,11 +1,8 @@
 import os
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
-from langchain_community.vectorstores import Chroma
-from langchain_community.document_loaders import PyPDFDirectoryLoader
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_pinecone import PineconeVectorStore
+from langchain_huggingface import HuggingFaceEmbeddings
 from state import SMEState
 
 load_dotenv()
@@ -25,23 +22,6 @@ openrouter_llm = ChatOpenAI(
 embeddings = HuggingFaceEmbeddings(model_name="BAAI/bge-small-en-v1.5")
 vectorstore = PineconeVectorStore(index_name="sme-advisor", embedding=embeddings)
 
-def initialize_vectorstore():
-    if not os.path.exists("./chroma_db"):
-        os.makedirs("data/sme_docs", exist_ok=True)
-        loader = PyPDFDirectoryLoader("data/sme_docs/")
-        docs = loader.load()
-        
-        if not docs:
-            return Chroma(persist_directory="./chroma_db", embedding_function=embeddings)
-            
-        text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
-        chunks = text_splitter.split_documents(docs)
-        return Chroma.from_documents(chunks, embeddings, persist_directory="./chroma_db")
-    
-    return Chroma(persist_directory="./chroma_db", embedding_function=embeddings)
-
-vectorstore = initialize_vectorstore()
-
 def orchestrator_router_agent(state: SMEState) -> SMEState:
     prompt = f"Categorize the intent of this Sri Lankan SME query into one word [TAX, REGISTRATION, LOANS, GENERAL]: {state['user_query']}"
     res = groq_router.invoke([("user", prompt)])
@@ -53,7 +33,7 @@ def regulation_search_agent(state: SMEState) -> SMEState:
     results = vectorstore.similarity_search(state["user_query"], k=4)
     docs_text = [f"Source: {doc.metadata.get('source', 'Doc')}\n{doc.page_content}" for doc in results]
     state["retrieved_docs"] = docs_text
-    state["messages"] = [f"[RAG Agent]: Retrieved {len(docs_text)} legal clauses."]
+    state["messages"] = [f"[RAG Agent]: Retrieved {len(docs_text)} legal clauses from Pinecone Cloud."]
     return state
 
 def financial_suggestion_agent(state: SMEState) -> SMEState:
