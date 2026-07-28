@@ -5,6 +5,7 @@ from langchain_community.vectorstores import Chroma
 from langchain_community.document_loaders import PyPDFDirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_pinecone import PineconeVectorStore
 from state import SMEState
 
 load_dotenv()
@@ -22,6 +23,7 @@ openrouter_llm = ChatOpenAI(
 )
 
 embeddings = HuggingFaceEmbeddings(model_name="BAAI/bge-small-en-v1.5")
+vectorstore = PineconeVectorStore(index_name="sme-advisor", embedding=embeddings)
 
 def initialize_vectorstore():
     if not os.path.exists("./chroma_db"):

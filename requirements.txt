@@ -2,8 +2,8 @@ langgraph
 langchain-openai
 langchain-community
 langchain-huggingface
-chromadb
+langchain-pinecone
+pinecone-client
 pypdf
 streamlit
 python-dotenv
-sentence-transformers
