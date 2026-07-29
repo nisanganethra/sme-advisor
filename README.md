@@ -10,6 +10,14 @@ An enterprise-grade, multi-agent AI application designed to provide Sri Lankan S
 
 ---
 
+## Module Information
+
+**University:** Horizon Campus  
+**Faculty:** Faculty of Information Technology  
+
+**Module:** IT41043 – Intelligent Systems (Agentic AI)
+
+---
 ## Project Description
 
 Sri Lankan Small and Medium Enterprises (SMEs) often struggle to navigate complex regulatory requirements, tax liabilities (such as TIN registration, VAT, and corporate income tax), and government-backed credit lines.
@@ -192,6 +200,25 @@ https://sme-advisor-pa97kxmqjunbmmg3buw36n.streamlit.app/
 * Encrypted PDFs: Strict government DRM on certain CBSL PDFs blocks the pypdf reader. These must be manually "Printed to PDF" to bypass the encryption before ingestion.
 * Cutoff Dates: While the RAG pipeline grounds the model in provided documents, the base Llama models have knowledge cutoffs (e.g., Llama 3.1 8B extends to December 31, 2023). The system relies entirely on the manually updated Pinecone index for current 2026 data.
 * Advisory Nature: The generated reports are AI-synthesized estimates and should not replace certified professional accounting or legal counsel in Sri Lanka.
+
+---
+
+## Conclusion
+The Sri Lankan SME Business and Tax Advisor successfully demonstrates how Agentic AI and RAG solve complex regulatory challenges. By orchestrating specialized models grounded in official IRD and CBSL documentation, this platform provides local businesses with accurate, accessible, and compliant financial guidance to confidently navigate complex tax and loan requirements.
+
+---
+
+## Author
+
+**W.G.N.Nethra Diwaman (ITBIN-2312-0013)**
+
+BSc (Hons) Information Technology
+
+Horizon Campus
+
+IT41043 – Intelligent Systems (Agentic AI)
+
+2026
 
 ---
 
